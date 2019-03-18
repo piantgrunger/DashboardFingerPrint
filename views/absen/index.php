@@ -7,11 +7,11 @@ use yii\widgets\DetailView;
 
 $models = $dataProvider->getModels();
 $first = reset($models);
-
+/*
 $this->registerJS("setTimeout(function(){
    window.location.reload(1);
 }, 5000);");
-
+*/
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AbsenSearch */
