@@ -65,4 +65,5 @@ class Pegawai extends \yii\db\ActiveRecord
     {
         return is_null($this->funit_kerja) ? '' : $this->funit_kerja->nama_unit;
     }
+    
 }

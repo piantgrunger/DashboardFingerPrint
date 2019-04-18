@@ -14,10 +14,14 @@ class AbsenSearch extends Absen
     /**
      * {@inheritdoc}
      */
+    public $tanggal_awal ;
+    public $tanggal_akhir ;
+    public $nama_pegawai;
+
     public function rules()
     {
         return [
-            [['nip', 'jam_masuk', 'jam_keluar', 'absen_datang', 'absen_keluar'], 'safe'],
+            [['nip', 'tanggal_awal','tanggal_akhir','nama_pegawai'], 'safe'],
         ];
     }
 
@@ -70,9 +74,13 @@ class AbsenSearch extends Absen
         if (!is_null($lokasi)) {
             $query->andWhere(['or', ['absen_datang' =>$lokasi],['absen_keluar' =>$lokasi]]);
         }
-        $query->andWhere(new \yii\db\Expression(" date_format(jam_masuk,'%y-%m-%d' ) = date_format(now(),'%y-%m-%d' )  "));
 
-        $query->andFilterWhere(['like', 'nip', $this->nip])
+       
+        $query->andWhere(new \yii\db\Expression(" date_format(jam_masuk,'%y-%m-%d' ) >= date_format('$this->tanggal_awal','%y-%m-%d' )  "));
+        $query->andWhere(new \yii\db\Expression(" date_format(jam_masuk,'%y-%m-%d' ) <= date_format('$this->tanggal_akhir','%y-%m-%d' )  "));
+
+        $query->andFilterWhere(['like', 'pegawai.nip', $this->nip])
+        ->andFilterWhere(['like', 'pegawai.nama', $this->nama_pegawai])
             ->andFilterWhere(['like', 'absen_datang', $this->absen_datang])
             ->andFilterWhere(['like', 'absen_keluar', $this->absen_keluar]);
 

@@ -20,8 +20,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 
@@ -31,7 +30,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => 'Absensi',
+            'brandLabel' => 'Absensi UINSA',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
@@ -40,7 +39,9 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => 'Home', 'url' => ['/site/index']],
+                ['label' => 'Absensi', 'url' => ['/absen/index']],
+                ['label' => 'Foto', 'url' => ['/foto-pegawai/index']],
+
 
             ],
         ]);

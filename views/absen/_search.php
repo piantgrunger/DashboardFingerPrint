@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\AbsenSearch */
@@ -17,20 +18,30 @@ use yii\widgets\ActiveForm;
             'data-pjax' => 1
         ],
     ]); ?>
+ <div class="row">
+ <div class="col-md-6">
+     <?= $form->field($model, 'tanggal_awal')->widget(DatePicker::classname(), [
+    'options' => ['placeholder' => 'Tanggal Awal ...'],
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd'
+    ]
+])?>
+</div>
+<div class="col-md-6">
+     <?= $form->field($model, 'tanggal_akhir')->widget(DatePicker::classname(), [
+    'options' => ['placeholder' => 'Tanggal Akhir ...'],
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd'
+    ]
+])?>
+</div>
 
-    <?= $form->field($model, 'nip') ?>
-
-    <?= $form->field($model, 'jam_masuk') ?>
-
-    <?= $form->field($model, 'jam_keluar') ?>
-
-    <?= $form->field($model, 'absen_datang') ?>
-
-    <?= $form->field($model, 'absen_keluar') ?>
-
+</div>
+  
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

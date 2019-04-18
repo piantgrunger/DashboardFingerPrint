@@ -8,6 +8,7 @@ use app\models\AbsenSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query; 
 
 /**
  * AbsenController implements the CRUD actions for Absen model.
@@ -23,7 +24,7 @@ class AbsenController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -37,6 +38,13 @@ class AbsenController extends Controller
     {
         $searchModel = new AbsenSearch();
         $lokasi = yii::$app->request->get('lokasi');
+        if ($searchModel->tanggal_awal =='') {
+            $searchModel->tanggal_awal = date("Y-m-d");
+        }
+        if ($searchModel->tanggal_akhir =='') {
+            $searchModel->tanggal_akhir = date("Y-m-d");
+        }     
+             
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $lokasi);
 
         return $this->render('index', [
@@ -44,20 +52,78 @@ class AbsenController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+/**
+     * Displays a single FotoPegawai model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($nip,$jam_masuk,$jam_keluar)
+    {
+        return $this->render('view', [
+            'model' =>  Absen::find()->where([
+                "nip" => $nip,
+                "jam_masuk" => $jam_masuk,
+                "jam_keluar" => $jam_keluar,
+                
+            ])->one(),
+        ]);
+    }
 
+    /**
+     * Creates a new FotoPegawai model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Absen();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing FotoPegawai model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($nip,$jam_masuk,$jam_keluar)
+    {
+        $model = Absen::find()->where([
+            "nip" => $nip,
+            "jam_masuk" => $jam_masuk,
+            "jam_keluar" => $jam_keluar,
+            
+        ])->one();
+
+        if ($model->load(Yii::$app->request->post()) ) {
+        
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    
     /**
      * Displays a single Absen model.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
+  
     /**
      * Creates a new Absen model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -70,9 +136,15 @@ class AbsenController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($nip,$jam_masuk,$jam_keluar)
     {
-        $this->findModel($id)->delete();
+      
+        Absen::find()->where([
+            "nip" => $nip,
+            "jam_masuk" => $jam_masuk,
+            "jam_keluar" => $jam_keluar,
+            
+        ])->one()->delete();
 
         return $this->redirect(['index']);
     }
@@ -91,5 +163,26 @@ class AbsenController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    public function actionNipList($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = new Query;
+            $query->select(["id"=>"nip","text" => "concat(nip ,' - ',nama)"])
+                ->distinct()
+                ->from('pegawai')
+                ->where(['like', 'nip', $q])
+                ->limit(20);
+            $command = $query->createCommand();
+            $data = $command->queryAll();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => City::find($id)->name];
+        }
+        return $out;
     }
 }

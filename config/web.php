@@ -5,6 +5,11 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    // set target language to be Indonesia
+    'language' => 'id-ID',
+      // set source language to be English
+  'sourceLanguage' => 'en-US',
+
     'bootstrap' => ['log'],
     'components' => [
         'request' => [

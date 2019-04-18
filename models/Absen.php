@@ -18,6 +18,7 @@ class Absen extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
     public static function tableName()
     {
         return 'absen';
@@ -51,7 +52,7 @@ class Absen extends \yii\db\ActiveRecord
     }
     public static function primaryKey()
     {
-        return ["nip"];
+        return ["nip","jam_masuk","jam_keluar"];
     }
 
     public function getMasuk()
