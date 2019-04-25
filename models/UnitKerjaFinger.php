@@ -42,7 +42,7 @@ class UnitKerja extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'simpeg_0511.m_jastruk';
+        return 'm_unit';
     }
 
     /**

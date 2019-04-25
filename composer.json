@@ -19,7 +19,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "kartik-v/yii2-widget-datepicker": "@dev",
-        "kartik-v/yii2-widget-select2": "dev-master"
+        "kartik-v/yii2-widget-select2": "dev-master",
+        "hscstudio/yii2-mimin": "1.1.4"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

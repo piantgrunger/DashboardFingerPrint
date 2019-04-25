@@ -20,6 +20,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
      <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -36,17 +37,31 @@ AppAsset::register($this);
                 'class' => 'navbar-inverse navbar-fixed-top',
             ],
         ]);
-        echo Nav::widget([
+
+
+
+
+
+
+
+        if (!yii::$app->user->isGuest) {
+            echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Absensi', 'url' => ['/absen/index']],
+                ['label' => 'Ijin', 'url' => ['/ijin/index']],
                 ['label' => 'Foto', 'url' => ['/foto-pegawai/index']],
-
+                ['label' =>Yii::$app->user->identity->username . ' (Log Out) ' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]
 
             ],
-        ]);
+            ]);
+        }
+     
         NavBar::end();
         ?>
+       
+
+
 
         <div class="container">
             <?= Breadcrumbs::widget([

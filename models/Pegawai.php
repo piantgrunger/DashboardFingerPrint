@@ -59,11 +59,12 @@ class Pegawai extends \yii\db\ActiveRecord
 
     public function getFunit_kerja()
     {
-        return $this->hasOne(UnitKerja::className(), [ 'id' =>'unit_kerja']);
+        return $this->hasOne(PegawaiSimpeg::className(), [ 'nip' =>'nip']);
     }
     public function getNama_unit_kerja()
     {
-        return is_null($this->funit_kerja) ? '' : $this->funit_kerja->nama_unit;
+        
+        return is_null($this->funit_kerja) ? '' : $this->funit_kerja->nama_unit_kerja;
     }
     
 }

@@ -23,7 +23,7 @@ class IjinController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -65,18 +65,8 @@ class IjinController extends Controller
     {
         $model = new Ijin();
 
-        if ($model->load(Yii::$app->request->post()) ) {
-            $tgl = date_create($model->tanggal_awal);
-            $akhir = date_create($model->tanggal_akhir);
-            while ($tgl <= $akhir) {
-                
-
-           
-           
-             date_add($tgl, date_interval_create_from_date_string('1 days'));
-           
-            }     
-          
+        if ($model->load(Yii::$app->request->post())&&($model->upload('file')) && ($model->save())) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -94,8 +84,8 @@ class IjinController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) &&($model->upload('file')) && $model->save()) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

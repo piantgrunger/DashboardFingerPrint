@@ -9,10 +9,12 @@ class m190418_064925_create_ijin extends Migration
         $this->createTable("ijin",[
             "id" => $this->primaryKey(),
             "nip" => $this->string(100)->notNull(),
-            'tanggal' => $this->date(),
-            "keterangan" => $this->string(100)->notNull(),
+            'tanggal_awal' => $this->date(),
+            'tanggal_akhir' => $this->date(),
+            "jenis" => $this->string(100)->notNull(),
+            "keterangan" => $this->text()->notNull(),
             'file' => $this->string(100),
-            
+            'status' => $this->string()->notNull()->defaultValue('Belum Diapprove'),            
 
             
         ]);
@@ -21,9 +23,7 @@ class m190418_064925_create_ijin extends Migration
 
     public function down()
     {
-        echo "m190418_064925_create_ijin cannot be reverted.\n";
-
-        return false;
+        $this->dropTable("ijin");
     }
 
     /*

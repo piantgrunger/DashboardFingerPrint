@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\IjinSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -26,9 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
      
             'nip',
-            'tanggal',
+            'nama_pegawai',
+            'tanggal_awal:date',
+            'tanggal_akhir:date',
+            'jenis',
+            
             'keterangan',
-            'file',
+            [
+             'attribute'=>'File Bukti',
+             'format' => 'raw',
+              'value' => function ($model) {
+                  return "<a href='".Url::to(["media/".$model->file])."' class='btn btn-primary' data-pjax=0 >Download</a>";
+              }
+            ],
+            'status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

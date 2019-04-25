@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\FotoPegawaiSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Foto Pegawais');
+$this->title = Yii::t('app', 'Foto Pegawai');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="foto-pegawai-index">

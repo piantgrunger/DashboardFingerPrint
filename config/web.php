@@ -9,12 +9,35 @@ $config = [
     'language' => 'id-ID',
       // set source language to be English
   'sourceLanguage' => 'en-US',
+  'as access' => [
+    'class' => '\hscstudio\mimin\components\AccessControl',
+    'allowActions' => [
+       // add wildcard allowed action here!
+      // 'lokasi/*',
+   // 'site/*',
+       'debug/*',
+      'mimin/*', // only in dev modewuw
+     //  'queue/*',
+   ],
+],
+
+'modules' => [
+	'mimin' => [
+		'class' => '\hscstudio\mimin\Module',
+	],
+],
 
     'bootstrap' => ['log'],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // only support DbManager
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'jfsbkjsbfdskjgfdskjbgfsdhjgfajds',
+          
+            'cookieValidationKey' => 'y2B_PhmMeo1G4hPY0dO7KfNled31dl6L',
+          //  'csrfParam' => '_csrf',
+            'enableCsrfValidation' => false,
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

@@ -45,7 +45,9 @@ class AbsenSearch extends Absen
     {
         $query = Absen::find()
         ->innerJoin("pegawai", "pegawai.nip = absen.nip")
-        ->innerJoin("m_unit", "pegawai.unit_kerja = m_unit.id")
+        ->leftJoin("simpeg_0511.tbpegawai", "simpeg_0511.tbpegawai.nip = absen.nip")
+        
+        ->leftJoin("simpeg_0511.m_unit", "simpeg_0511.tbpegawai.id_unitkerja = simpeg_0511.m_unit.id")
         ;
 
         // add conditions that should always apply here

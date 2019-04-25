@@ -27,7 +27,8 @@ $Desc = empty($model->nip) ? '' : $model->nip." - ".Pegawai::find()->where(['nip
 
 <div class="absen-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
+
 
     <?= $form->field($model, 'nip') ->widget(Select2::classname(), [
     'initValueText' => $Desc, // set the initial display text
@@ -50,17 +51,25 @@ $Desc = empty($model->nip) ? '' : $model->nip." - ".Pegawai::find()->where(['nip
 ]); ?>
 
 
-<?= $form->field($model, 'tanggal')->widget(DatePicker::classname(), [
-    'options' => ['placeholder' => 'Masukkan Tanggal ...'],
+<?= $form->field($model, 'tanggal_awal')->widget(DatePicker::classname(), [
+    'options' => ['placeholder' => 'Masukkan Tanggal Awal...'],
     'pluginOptions' => [
         'autoclose'=>true,
         'format' => 'yyyy-mm-dd'
     ]])
     ?>
 
+
+<?= $form->field($model, 'tanggal_akhir')->widget(DatePicker::classname(), [
+    'options' => ['placeholder' => 'Masukkan Tanggal Akhir...'],
+    'pluginOptions' => [
+        'autoclose'=>true,
+        'format' => 'yyyy-mm-dd'
+    ]])
+    ?>
     
 
-    <?=$form->field($model, 'keterangan')->dropDownList([
+    <?=$form->field($model, 'jenis')->dropDownList([
         "SPD"=>"SPD",
         "SURAT TUGAS"=>"Surat Tugas",
         "CUTI"=>"Cuti",
@@ -73,9 +82,12 @@ $Desc = empty($model->nip) ? '' : $model->nip." - ".Pegawai::find()->where(['nip
         "S IJIN"=>"Surat Ijin",
     ]) ?>
 
+<?=$form->field($model, 'keterangan')->textArea() ?>
 
 
-    <?= $form->field($model, 'file')->textInput(['maxlength' => true]) ?>
+
+
+    <?= $form->field($model, 'file')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
