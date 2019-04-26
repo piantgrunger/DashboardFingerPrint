@@ -51,7 +51,7 @@ AppAsset::register($this);
                 ['label' => 'Absensi', 'url' => ['/absen/index']],
                 ['label' => 'Ijin', 'url' => ['/ijin/index']],
                 ['label' => 'Foto', 'url' => ['/foto-pegawai/index']],
-                ['label' =>Yii::$app->user->identity->username .' - '.Yii::$app->user->identity->pegawai->nama . ' (Log Out) ' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]
+                ['label' =>Yii::$app->user->identity->username .' - '.Yii::$app->user->identity->pegawai->nama . ' (Log Out) ' ,'url' =>'http://ctrl.uinsby.ac.id']
 
             ],
             ]);
