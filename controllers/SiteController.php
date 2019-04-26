@@ -71,7 +71,7 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect("http://ctrl.uinsby.ac.id/index/portal");
     }
 
     public function actionContact()
