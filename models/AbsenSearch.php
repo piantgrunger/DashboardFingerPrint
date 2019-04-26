@@ -83,7 +83,7 @@ class AbsenSearch extends Absen
 
         $query->andFilterWhere(['like', 'pegawai.nip', $this->nip])
         ->andFilterWhere(['like', 'pegawai.nama', $this->nama_pegawai])
-            ->andFilterWhere(['like', 'absen_datang', $this->absen_datang])
+            ->andFilterWhere(['like', 'absen_datang', $this->absen_datang]);
             
        
 
