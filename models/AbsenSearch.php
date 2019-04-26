@@ -85,9 +85,7 @@ class AbsenSearch extends Absen
         ->andFilterWhere(['like', 'pegawai.nama', $this->nama_pegawai])
             ->andFilterWhere(['like', 'absen_datang', $this->absen_datang])
             
-        if(!is_null(Yii::$app->username->identity->pegawai)){
-
-        }         
+       
 
         return $dataProvider;
     }
