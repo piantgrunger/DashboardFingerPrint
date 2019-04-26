@@ -47,7 +47,7 @@ class AbsenSearch extends Absen
         ->innerJoin("pegawai", "pegawai.nip = absen.nip")
         ->leftJoin("simpeg_0511.tbpegawai", "simpeg_0511.tbpegawai.nip = absen.nip")
         
-        ->leftJoin("simpeg_0511.m_unit", "simpeg_0511.tbpegawai.id_unitkerja = simpeg_0511.m_unit.id")
+        ->leftJoin("simpeg_0511.m_jastruk", "simpeg_0511.tbpegawai.id_jastruk = simpeg_0511.m_jastruk.id")
         ;
 
         // add conditions that should always apply here
@@ -84,7 +84,10 @@ class AbsenSearch extends Absen
         $query->andFilterWhere(['like', 'pegawai.nip', $this->nip])
         ->andFilterWhere(['like', 'pegawai.nama', $this->nama_pegawai])
             ->andFilterWhere(['like', 'absen_datang', $this->absen_datang])
-            ->andFilterWhere(['like', 'absen_keluar', $this->absen_keluar]);
+            
+        if(!is_null(Yii::$app->username->identity->pegawai)){
+
+        }         
 
         return $dataProvider;
     }
