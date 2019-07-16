@@ -30,9 +30,8 @@ class FotoPegawai extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'nip', 'foto'], 'required'],
-            [['id'], 'integer'],
-            
+            [[ 'nip'], 'required'],
+           
           [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg,jpeg,bmp', 'maxSize' => 512000000],
 
         ];

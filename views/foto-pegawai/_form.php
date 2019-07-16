@@ -6,6 +6,13 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\FotoPegawai */
 /* @var $form yii\widgets\ActiveForm */
+use yii\web\JsExpression;
+use app\models\Pegawai;
+use kartik\select2\Select2;
+$url = \yii\helpers\Url::to(['absen/nip-list']);
+ 
+// Get the initial city description
+$Desc = empty($model->nip) ? '' : $model->nip." - ".Pegawai::find()->where(['nip'=>$model->nip])->one()->nama;
 ?>
 
 <div class="foto-pegawai-form">
@@ -16,9 +23,26 @@ use yii\widgets\ActiveForm;
 
    
 
-    <?= $form->field($model, 'id')->textInput() ?>
 
-    <?= $form->field($model, 'nip')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'nip') ->widget(Select2::classname(), [
+    'initValueText' => $Desc, // set the initial display text
+    'options' => ['placeholder' => 'Cari  Pegawai ...'],
+'pluginOptions' => [
+    'allowClear' => true,
+    'minimumInputLength' => 4,
+    'language' => [
+        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+    ],
+    'ajax' => [
+        'url' => $url,
+        'dataType' => 'json',
+        'data' => new JsExpression('function(params) { return {q:params.term}; }')
+    ],
+    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+    'templateResult' => new JsExpression('function(city) { return city.text; }'),
+    'templateSelection' => new JsExpression('function (city) { return city.text; }'),
+],
+]); ?>
 
 
     <?= '<img src="data:image/jpeg;base64,'.base64_encode($model->foto).'" width="200" height="250" />'?>

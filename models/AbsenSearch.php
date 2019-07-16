@@ -48,6 +48,7 @@ class AbsenSearch extends Absen
         ->leftJoin("simpeg_0511.tbpegawai", "simpeg_0511.tbpegawai.nip = absen.nip")
         
         ->leftJoin("simpeg_0511.m_jastruk", "simpeg_0511.tbpegawai.id_jastruk = simpeg_0511.m_jastruk.id")
+
         ;
 
         // add conditions that should always apply here

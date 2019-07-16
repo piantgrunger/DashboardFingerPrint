@@ -175,6 +175,8 @@ class AbsenController extends Controller
                 ->distinct()
                 ->from('pegawai')
                 ->where(['like', 'nip', $q])
+                ->orWhere(['like', 'nama', $q])
+                
                 ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();

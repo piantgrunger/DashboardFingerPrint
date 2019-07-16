@@ -18,17 +18,7 @@ class FotoPegawaiController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+ 
 
     /**
      * Lists all FotoPegawai models.
@@ -67,8 +57,12 @@ class FotoPegawaiController extends Controller
     {
         $model = new FotoPegawai();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+         if ($model->load(Yii::$app->request->post()) ) {
+            $model->upload('file');
+            if ($model->save()) {
+
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
@@ -90,7 +84,8 @@ class FotoPegawaiController extends Controller
         if ($model->load(Yii::$app->request->post()) ) {
             $model->upload('file');
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+                return $this->redirect(['index']);
             }
         }
 

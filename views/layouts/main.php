@@ -10,7 +10,20 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+use hscstudio\mimin\components\Mimin;
 AppAsset::register($this);
+$menu= [
+    ['label' => 'Absensi', 'url' => ['/absen/index']],
+    ['label' => 'Ijin', 'url' => ['/ijin/index']],
+    ['label' => 'Foto', 'url' => ['/foto-pegawai/index']],
+   
+];
+if(!Yii::$app->user->isGuest)
+{
+    $menu[]= ['label' =>Yii::$app->user->identity->username .' - '.Yii::$app->user->identity->pegawai->nama . ' (Log Out) ' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']];
+}
+$menu = Mimin::filterMenu($menu);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -47,13 +60,7 @@ AppAsset::register($this);
         if (!yii::$app->user->isGuest) {
             echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
-            'items' => [
-                ['label' => 'Absensi', 'url' => ['/absen/index']],
-                ['label' => 'Ijin', 'url' => ['/ijin/index']],
-                ['label' => 'Foto', 'url' => ['/foto-pegawai/index']],
-                ['label' =>Yii::$app->user->identity->username .' - '.Yii::$app->user->identity->pegawai->nama . ' (Log Out) ' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]
-
-            ],
+            'items' => $menu,
             ]);
         }
      
