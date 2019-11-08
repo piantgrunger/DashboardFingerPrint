@@ -74,7 +74,10 @@ $column = [
          
              
             return $kodeunit==$model->unit? Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-            'title' => Yii::t('yii', 'delete'),
+            'title' => Yii::t('yii', 'delete'),'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'method' => 'post',
+            ],
             ]) :'';
         }
 
