@@ -2,8 +2,10 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=10.101.10.246;dbname=fingerprint',
-    'username' => 'finger',
-    'password' => 'F!ng3rDb',
+    'dsn' =>  'pgsql:host=180.250.165.150;port=5432;dbname=iainmigrasi',
+    'username' => 'iain',
+    'password' => 'ampelakademik!3',
     'charset' => 'utf8',
-];
+    'schemaMap' => [ 'pgsql'=> [ 'class'=>'yii\db\pgsql\Schema', 'defaultSchema' => 'skpi' //specify your schema here
+     ] ],
+    ];

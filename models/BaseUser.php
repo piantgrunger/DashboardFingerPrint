@@ -19,7 +19,7 @@ class BaseUser extends ParentUser
  
        
       
-        if (Url::base(true) !== 'http://skripsi.uinsby.ac.id') {
+        if (Url::base(true) !== 'http://skpi.uinsby.ac.id') {
               $this->loginUrl=['site/login'];
                parent::renewAuthStatus();
           

@@ -13,7 +13,7 @@ class m170228_064635_mimin_init extends Migration
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
 		}
 
-		$this->createTable('{{%route}}', [
+		$this->createTable('skpi.route', [
 			'name' => $this->string(64),
 			'alias' => $this->string(64)->notNull(),
 			'type' => $this->string(64)->notNull(),

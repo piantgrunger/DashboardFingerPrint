@@ -31,7 +31,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'skpi.user1';
     }
 
     /**
@@ -193,8 +193,21 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-    public function getPegawai()
-    {
-        return $this->hasOne(PegawaiSimpeg::className(), ['nip' => 'username']);
+
+    public function getRoles()
+	{
+		return $this->hasMany(AuthAssignment::className(), [
+			'user_id' => 'id',
+		]);
     }
+    
+    public function getRoleSiakad()
+	{
+		return $this->hasMany(Role::className(), [
+			'userid' => 'id',
+        ])->where(['koderole'=>'kajur'])
+        ->orWhere(['and',['koderole'=>'adminakad'],['kodeunit'=>'UIN']])
+        ;
+    }
+    
 }

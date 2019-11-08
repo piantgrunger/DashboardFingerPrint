@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Dashboard Absensi Universitas Islam Negeri Sunan Ampel';
+$this->title = 'Surat Keterangan Pendamping Ijazah';
 ?>
 <div class="site-index">
 

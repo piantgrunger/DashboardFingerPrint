@@ -11,16 +11,23 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 use hscstudio\mimin\components\Mimin;
+
 AppAsset::register($this);
 $menu= [
-    ['label' => 'Absensi', 'url' => ['/absen/index']],
-    ['label' => 'Ijin', 'url' => ['/ijin/index']],
-    ['label' => 'Foto', 'url' => ['/foto-pegawai/index']],
-   
+    
+    ['label' =>'Master' ,'url' =>'#' , 'items'=> [
+    ['label' => 'Capaian', 'url' => ['/capaian/index']],
+    ['label' => 'Bahasa', 'url' => ['/bahasa/index']],
+    
+    ],
+    
+    
+],
+['label' => 'Capaian Pembelajaran', 'url' => ['/capaian-pembelajaran/index']],
+
 ];
-if(!Yii::$app->user->isGuest)
-{
-    $menu[]= ['label' =>Yii::$app->user->identity->username .' - '.Yii::$app->user->identity->pegawai->nama . ' (Log Out) ' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']];
+if (!Yii::$app->user->isGuest) {
+    $menu1= [['label' =>Yii::$app->user->identity->username . ' (Log Out) ' ,'url' =>['/site/logout'],'linkOptions'=>['data-method'=>'POST']]];
 }
 $menu = Mimin::filterMenu($menu);
 
@@ -44,10 +51,10 @@ $menu = Mimin::filterMenu($menu);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => 'Absensi UINSA',
+            'brandLabel' => '<img src="http://ctrl.uinsby.ac.id/assets/images/uinsa.png" class="pull-left" width=50 height=62>'.' SKPI UINSA',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
+                'class' => 'navbar-default ',
             ],
         ]);
 
@@ -59,8 +66,12 @@ $menu = Mimin::filterMenu($menu);
 
         if (!yii::$app->user->isGuest) {
             echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-left'],
+                'items' => $menu,
+                ]);
+            echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
-            'items' => $menu,
+            'items' => $menu1,
             ]);
         }
      

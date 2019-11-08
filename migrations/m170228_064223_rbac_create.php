@@ -46,7 +46,7 @@ class m170228_064223_rbac_create extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable($authManager->ruleTable, [
+        $this->createTable('skpi.auth_rule', [
             'name' => $this->string(64)->notNull(),
             'data' => $this->binary(),
             'created_at' => $this->integer(),
@@ -54,7 +54,7 @@ class m170228_064223_rbac_create extends Migration
             'PRIMARY KEY (name)',
         ], $tableOptions);
 
-        $this->createTable($authManager->itemTable, [
+        $this->createTable('skpi.auth_item', [
             'name' => $this->string(64)->notNull(),
             'type' => $this->smallInteger()->notNull(),
             'description' => $this->text(),
@@ -63,27 +63,27 @@ class m170228_064223_rbac_create extends Migration
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
             'PRIMARY KEY (name)',
-            'FOREIGN KEY (rule_name) REFERENCES ' . $authManager->ruleTable . ' (name)'.
+            'FOREIGN KEY (rule_name) REFERENCES skpi.' . $authManager->ruleTable . ' (name)'.
                 ($this->isMSSQL() ? '' : ' ON DELETE SET NULL ON UPDATE CASCADE'),
         ], $tableOptions);
-        $this->createIndex('idx-auth_item-type', $authManager->itemTable, 'type');
+        $this->createIndex('idx-auth_item-type', 'skpi.'.$authManager->itemTable, 'type');
 
-        $this->createTable($authManager->itemChildTable, [
+        $this->createTable('skpi.auth_item_child', [
             'parent' => $this->string(64)->notNull(),
             'child' => $this->string(64)->notNull(),
             'PRIMARY KEY (parent, child)',
-            'FOREIGN KEY (parent) REFERENCES ' . $authManager->itemTable . ' (name)'.
+            'FOREIGN KEY (parent) REFERENCES skpi.' . $authManager->itemTable . ' (name)'.
                 ($this->isMSSQL() ? '' : ' ON DELETE CASCADE ON UPDATE CASCADE'),
-            'FOREIGN KEY (child) REFERENCES ' . $authManager->itemTable . ' (name)'.
+            'FOREIGN KEY (child) REFERENCES skpi.' . $authManager->itemTable . ' (name)'.
                 ($this->isMSSQL() ? '' : ' ON DELETE CASCADE ON UPDATE CASCADE'),
         ], $tableOptions);
 
-        $this->createTable($authManager->assignmentTable, [
+        $this->createTable('skpi.auth_assignment', [
             'item_name' => $this->string(64)->notNull(),
             'user_id' => $this->string(64)->notNull(),
             'created_at' => $this->integer(),
             'PRIMARY KEY (item_name, user_id)',
-            'FOREIGN KEY (item_name) REFERENCES ' . $authManager->itemTable . ' (name) ON DELETE CASCADE ON UPDATE CASCADE',
+            'FOREIGN KEY (item_name) REFERENCES skpi.' . $authManager->itemTable . ' (name) ON DELETE CASCADE ON UPDATE CASCADE',
         ], $tableOptions);
 
         if ($this->isMSSQL()) {
@@ -136,9 +136,9 @@ class m170228_064223_rbac_create extends Migration
             $this->execute('DROP TRIGGER dbo.trigger_auth_item_child;');
         }
 
-        $this->dropTable($authManager->assignmentTable);
-        $this->dropTable($authManager->itemChildTable);
-        $this->dropTable($authManager->itemTable);
-        $this->dropTable($authManager->ruleTable);
+       // $this->dropTable('skpi.'.$authManager->assignmentTable);
+      //  $this->dropTable('skpi.'.$authManager->itemChildTable);
+       // $this->dropTable('skpi.'.$authManager->itemTable);
+       // $this->dropTable('skpi.'.$authManager->ruleTable);
     }
 }
